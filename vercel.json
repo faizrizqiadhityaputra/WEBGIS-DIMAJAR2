@@ -5,11 +5,7 @@
   "outputDirectory": "public/build",
   "functions": {
     "lamda/*.php": {
-      "runtime": "vercel-php@0.7.0",
-      "config": {
-        "maxDuration": 30,
-        "memory": 1024
-      }
+      "runtime": "vercel-php@0.7.0"
     }
   },
   "routes": [
@@ -19,13 +15,13 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/lambda/index.php"
+      "dest": "/lamda/index.php"
     }
   ],
   "env": {
     "APP_ENV": "production",
     "APP_DEBUG": "false",
-    "APP_URL": "https://webgis-dimajar2.vercel.app",
+    "APP_URL": "https://webgis-dimajar-2-fix.vercel.app",
     "VIEW_COMPILED_PATH": "/tmp",
     "CACHE_DRIVER": "array",
     "LOG_CHANNEL": "stderr",
