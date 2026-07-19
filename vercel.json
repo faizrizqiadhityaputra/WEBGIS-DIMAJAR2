@@ -4,7 +4,7 @@
   "buildCommand": "echo 'Build selesai'",
   "outputDirectory": "public/build",
   "functions": {
-    "api/*.php": {
+    "lamda/*.php": {
       "runtime": "vercel-php@0.7.0",
       "config": {
         "maxDuration": 30,
@@ -19,7 +19,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/api/index.php"
+      "dest": "/lambda/index.php"
     }
   ],
   "env": {
