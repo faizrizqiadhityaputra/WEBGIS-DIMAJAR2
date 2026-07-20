@@ -1,5 +1,8 @@
 <?php
 
+$_SERVER['HTTP_ACCEPT'] = 'application/json';
+putenv('APP_DEBUG=true');
+
 // 1. Buat folder sementara di /tmp khusus untuk Vercel Serverless
 $tmpStorage = '/tmp/storage';
 if (!is_dir($tmpStorage)) {
