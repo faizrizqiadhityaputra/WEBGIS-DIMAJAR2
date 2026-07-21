@@ -39,53 +39,64 @@
         </div>
     </nav>
 
-    <!-- HERO SECTION RESPONSIF -->
-    <!-- Catatan: Ganti URL background di bawah sesuai dengan gambar latar dusun Anda -->
-    <section class="relative min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-6 pt-24 pb-16 bg-cover bg-center bg-no-repeat" style="background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1932&auto=format&fit=crop');">
+    <!-- WRAPPER HERO SECTION -->
+<section class="relative min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-6 pt-24 pb-16 overflow-hidden">
 
-        <!-- Overlay Gradasi Hitam & Putih agar Teks Super Jelas -->
-        <div class="absolute inset-0 bg-gradient-to-b from-white/80 via-white/70 to-white/90 backdrop-blur-[3px]"></div>
+    <!-- 1. BACKGROUND IMAGE IMPROVED (Agar Tidak Terlalu Zoom di HP) -->
+    <!-- Ganti URL src di bawah dengan jalur gambar latar belakang Anda -->
+    <img src="/jalur-gambar-latar-anda.jpg"
+         alt="Background Dimajar"
+         class="absolute inset-0 w-full h-full object-cover object-center md:object-cover sm:scale-100 scale-105 transition-all duration-500 z-0" />
 
-        <!-- Konten Utama -->
-        <div class="relative z-10 max-w-lg md:max-w-2xl lg:max-w-3xl mx-auto flex flex-col items-center">
+    <!-- Overlay Putih/Gradasi agar teks tetap terbaca jelas di atas gambar -->
+    <div class="absolute inset-0 bg-white/70 sm:bg-white/50 backdrop-blur-[2px] z-1"></div>
 
-            <!-- Badge Lokasi -->
-            <div class="inline-flex items-center gap-1.5 bg-white/90 backdrop-blur-md px-4 py-1.5 rounded-full text-xs md:text-sm font-bold text-emerald-800 shadow-sm mb-6 border border-emerald-100/60 whitespace-nowrap">
-                <span>📍</span>
-                <span class="tracking-wide">SUMBERARUM, TEMPURAN</span>
-            </div>
+    <!-- 2. NAVBAR RESPONSIF (Anti-Terpotong) -->
+    <nav class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-md md:max-w-xl">
+        <div class="flex items-center justify-between bg-white/85 backdrop-blur-md rounded-full px-4 py-2.5 md:px-6 md:py-3 shadow-lg border border-white/40">
 
-            <!-- Judul Utama (Sangat pas di layar HP maupun PC) -->
-            <h1 class="text-3xl sm:text-4xl md:text-6xl font-extrabold text-slate-800 tracking-tight leading-tight mb-4">
-                Selamat Datang di <br class="hidden sm:inline">
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-600">Dusun Dimajar 2</span>
-            </h1>
+            <!-- Logo (Ditambahkan whitespace-nowrap & shrink-0 agar angka '2' tidak turun) -->
+            <a href="/" class="text-sm sm:text-base md:text-lg font-bold text-slate-800 whitespace-nowrap shrink-0 flex items-center gap-1.5">
+                <span>🍃</span>
+                <span>Dimajar 2</span>
+            </a>
 
-            <!-- Deskripsi Dusun -->
-            <p class="text-xs sm:text-sm md:text-base lg:text-lg text-slate-600 max-w-sm sm:max-w-md md:max-w-xl mb-8 leading-relaxed font-medium px-2">
-                Sebuah dusun asri di Kelurahan Sumberarum. Temukan potensi lokal, keragaman demografi, dan infrastruktur wilayah melalui eksplorasi pemetaan spasial interaktif kami yang modern.
-            </p>
-
-            <!-- Tombol Jelajahi (Membesar 100% di HP, ukuran otomatis di PC) -->
-            <div class="w-full sm:w-auto flex flex-col sm:flex-row items-center justify-center gap-3">
-                <a href="/peta" class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold text-sm md:text-base px-7 py-3.5 rounded-full shadow-lg hover:shadow-emerald-500/30 transition duration-300 transform hover:-translate-y-0.5">
-                    <span>Jelajahi Melalui Peta Interaktif</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 md:h-5 md:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                    </svg>
-                </a>
-            </div>
+            <!-- Tombol Peta -->
+            <a href="/peta" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs md:text-sm font-semibold px-4 py-2 md:px-5 md:py-2.5 rounded-full transition whitespace-nowrap shrink-0 shadow-md">
+                Peta Interaktif
+            </a>
 
         </div>
+    </nav>
 
-        <!-- Footer / Copyright Kecil di Bawah -->
-        <div class="absolute bottom-4 left-0 right-0 z-10 text-center">
-            <p class="text-[11px] md:text-xs text-slate-500 font-medium">
-                &copy; {{ date('Y') }} WebGIS Dusun Dimajar 2 &bull; All Rights Reserved.
-            </p>
+    <!-- 3. KONTEN TEKS & TOMBOL CTA -->
+    <div class="relative z-10 max-w-lg md:max-w-2xl mx-auto flex flex-col items-center mt-6">
+
+        <!-- Badge Lokasi -->
+        <div class="inline-flex items-center gap-1.5 bg-white/90 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs md:text-sm font-semibold text-emerald-800 shadow-sm mb-6 border border-white/60 whitespace-nowrap">
+            <span>📍</span>
+            <span>SUMBERARUM, TEMPURAN</span>
         </div>
 
-    </section>
+        <!-- Judul -->
+        <h1 class="text-3xl sm:text-4xl md:text-6xl font-extrabold text-slate-800 tracking-tight leading-tight mb-4">
+            Selamat Datang di <br>
+            <span class="text-emerald-600">Dusun Dimajar 2</span>
+        </h1>
+
+        <!-- Deskripsi -->
+        <p class="text-xs sm:text-sm md:text-base text-slate-700 max-w-md md:max-w-lg mb-8 leading-relaxed px-2">
+            Sebuah dusun asri di Kelurahan Sumberarum. Temukan potensi lokal, keragaman demografi, dan infrastruktur wilayah melalui eksplorasi pemetaan spasial interaktif kami yang modern.
+        </p>
+
+        <!-- Tombol Jelajahi -->
+        <a href="/peta" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm md:text-base px-7 py-3.5 rounded-full shadow-lg transition duration-300 transform hover:-translate-y-0.5">
+            <span>Jelajahi Melalui Peta Interaktif</span>
+            <span>🚀</span>
+        </a>
+
+    </div>
+</section>
 
 </body>
 </html>
