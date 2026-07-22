@@ -37,7 +37,6 @@
         body {
             font-family: 'Inter', sans-serif;
             color: var(--text-main);
-            /* Background gradien sangat halus */
             background: radial-gradient(circle at 50% 0%, #ffffff 0%, #f0fdf4 50%, #e2e8f0 100%);
             background-attachment: fixed;
             overflow-x: hidden;
@@ -52,10 +51,8 @@
         [id] { scroll-margin-top: 110px; }
 
         /* ===============================================================
-           ANIMASI SPASIAL, GRID, & PARTIKEL DAUN MELAYANG (DISEMPURNAKAN)
+           1. ANIMASI SPASIAL, GRID, & PARTIKEL DAUN MELAYANG
         =============================================================== */
-
-        /* 1. Grid Spasial Bergerak */
         .spatial-grid-bg {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -69,7 +66,6 @@
         }
         @keyframes gridMove { 0% { background-position: 0 0; } 100% { background-position: 40px 40px; } }
 
-        /* 2. Radar/Sinyal Hijau */
         .spatial-radar {
             position: fixed;
             top: 35%; left: 50%;
@@ -87,16 +83,13 @@
             100% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
         }
 
-        /* 3. Kontainer Partikel (Daun & Cahaya) - Daun Bergoyang Organik */
         .particle-container { position: fixed; inset: 0; z-index: -2; pointer-events: none; overflow: hidden; transition: transform 0.2s ease-out; }
         .particle { position: absolute; opacity: 0; }
 
-        /* Cahaya Orb (Efek Glow di sudut-sudut) */
         .orb-1 { left: 5%; bottom: -10%; font-size: 15rem; filter: blur(40px); animation: floatUp linear 25s infinite; animation-delay: 0s; color: rgba(16, 185, 129, 0.3); }
         .orb-2 { left: 80%; bottom: -20%; font-size: 20rem; filter: blur(50px); animation: floatUp linear 30s infinite; animation-delay: 5s; color: rgba(5, 150, 105, 0.2); }
         .orb-3 { left: 40%; bottom: -15%; font-size: 12rem; filter: blur(45px); animation: floatUp linear 28s infinite; animation-delay: 2s; color: rgba(52, 211, 153, 0.25); }
 
-        /* Partikel Daun Melayang Bergoyang (Fluttering) */
         .leaf-1 { left: 10%; font-size: 1.5rem; animation: flutterUp1 22s ease-in-out infinite; animation-delay: 0s; color: rgba(16, 185, 129, 0.7); }
         .leaf-2 { left: 85%; font-size: 2rem; animation: flutterUp2 28s ease-in-out infinite; animation-delay: 3s; color: rgba(5, 150, 105, 0.5); filter: blur(1.5px); }
         .leaf-3 { left: 45%; font-size: 1.2rem; animation: flutterUp1 19s ease-in-out infinite; animation-delay: 7s; color: rgba(52, 211, 153, 0.8); }
@@ -113,7 +106,6 @@
             100% { transform: translateY(-20vh) rotate(360deg) translateX(120px); opacity: 0; }
         }
 
-        /* Animasi Daun Goyang Kiri-Kanan (Organik) */
         @keyframes flutterUp1 {
             0% { transform: translate3d(0, 110vh, 0) rotate(0deg); opacity: 0; }
             10% { opacity: 0.8; }
@@ -140,10 +132,30 @@
         .floating-element { animation: floatAnim 6s ease-in-out infinite; }
 
         /* ===============================================================
-           KOMPONEN UI & SECTION
+           2. FITUR BARU: SPOTLIGHT GLOW & 3D TILT EFFECT
         =============================================================== */
+        .spotlight-card {
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.15s ease-out, box-shadow 0.3s ease, border-color 0.3s ease;
+            will-change: transform;
+        }
+        .spotlight-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(16, 185, 129, 0.18), transparent 40%);
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .spotlight-card:hover::before { opacity: 1; }
+        .spotlight-card > * { position: relative; z-index: 1; }
 
-        /* --- 1. NAVBAR FIXED & GLASSMORPHISM --- */
+        /* ===============================================================
+           3. KOMPONEN UI & SECTION
+        =============================================================== */
         .navbar-wrapper {
             position: fixed; top: 20px; left: 0; width: 100%; z-index: 99999;
             display: flex; justify-content: center; padding: 0 15px; pointer-events: none;
@@ -168,22 +180,20 @@
         .btn-nav { background: var(--primary-gradient); color: white !important; padding: 10px 24px; border-radius: 50px; transition: all 0.3s; font-weight: 600; box-shadow: 0 6px 15px var(--primary-glow); border: none; }
         .btn-nav:hover { transform: translateY(-3px); box-shadow: 0 10px 25px var(--primary-glow); }
 
-        /* --- 2. HERO SECTION DENGAN TRANSISI HALUS (SOLUSI GAMBAR PATAH) --- */
+        /* HERO SECTION DENGAN TRANSISI HALUS */
         .hero-section {
             position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center;
             text-align: center; padding: 120px 20px 60px 20px; overflow: hidden;
-            background-color: transparent; /* MENGHILANGKAN WARNA SOLID AGAR MENYATU DGN BACKGROUND BAWAH */
+            background-color: transparent;
         }
         .hero-bg-img {
             position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0;
             animation: slowPan 30s ease-in-out infinite;
-            /* MASKING: Membuat bagian bawah gambar memudar halus perlahan ke transparan */
             -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
             mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
         }
         .hero-overlay {
             position: absolute; inset: 0;
-            /* Gradien memudar dari putih ke transparan agar menyatu dengan body background */
             background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.85) 50%, transparent 100%);
             z-index: 1;
         }
@@ -195,27 +205,26 @@
         .btn-hero { background: var(--primary-gradient); color: white; padding: 16px 40px; border-radius: 50px; font-weight: 600; text-decoration: none; transition: all 0.3s; display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 10px 25px var(--primary-glow); border: 2px solid transparent; }
         .btn-hero:hover { transform: translateY(-5px); box-shadow: 0 15px 35px var(--primary-glow); color: white; border-color: rgba(255,255,255,0.5); }
 
-        /* --- 3. SEKILAS & SEJARAH --- */
         .section-padding { padding: 100px 0; position: relative; z-index: 2; }
         .section-badge { display: inline-block; background: var(--primary-light); color: var(--primary-dark); padding: 8px 18px; border-radius: 50px; font-size: 0.85rem; font-weight: 700; margin-bottom: 16px; border: 1px solid rgba(5,150,105,0.2); }
-        .section-title { font-weight: 800; font-size: clamp(2rem, 4vw, 2.5rem); margin-bottom: 20px; letter-spacing: -0.02em; }
+        .section-title { font-weight: 800; font-size: clamp(2rem, 4vw, 2.5rem); margin-bottom: 20px; letter-spacing: -0.02em; line-height: 1.25; text-wrap: balance; }
         .section-title span { color: var(--primary); }
 
         .about-image-wrapper { background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(241, 245, 249, 0.8) 100%); border-radius: 30px; padding: 0; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15); min-height: 380px; display: flex; align-items: center; justify-content: center; border: 4px solid white; position: relative; overflow: hidden; }
         .about-image-wrapper img { width: 100%; height: 100%; min-height: 380px; object-fit: cover; border-radius: 26px; margin: 0; display: block; transition: transform 0.5s; }
         .about-image-wrapper:hover img { transform: scale(1.05); }
 
-        .history-card { background: rgba(255,255,255,0.85); backdrop-filter: blur(10px); border-radius: 24px; padding: 35px; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05); border: 1px solid var(--border-color); height: 100%; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .history-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px -10px rgba(5, 150, 105, 0.15); border-color: var(--primary-light); background: #ffffff; }
+        .history-card { background: rgba(255,255,255,0.85); backdrop-filter: blur(10px); border-radius: 24px; padding: 35px; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05); border: 1px solid var(--border-color); height: 100%; }
+        .history-card:hover { box-shadow: 0 25px 50px -12px rgba(5, 150, 105, 0.2); border-color: var(--primary-light); background: #ffffff; }
         .history-img-card { position: relative; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); height: 240px; background: #E2E8F0; border: 2px solid white; }
         .history-img-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
         .history-img-card:hover img { transform: scale(1.1); }
         .history-img-label { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.85), transparent); color: #fff; padding: 25px 15px 10px 15px; font-size: 0.9rem; font-weight: 700; text-align: center; }
 
-        /* --- 4. INFOGRAFIS CARDS --- */
-        .stat-card { background: rgba(255,255,255,0.85); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,1); border-radius: 28px; padding: 35px 20px; text-align: center; height: 100%; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.06); position: relative; }
+        /* INFOGRAFIS CARDS */
+        .stat-card { background: rgba(255,255,255,0.85); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,1); border-radius: 28px; padding: 35px 20px; text-align: center; height: 100%; box-shadow: 0 10px 30px -10px rgba(0,0,0,0.06); position: relative; }
         .stat-card::after { content: ''; position: absolute; inset: 0; border-radius: 28px; box-shadow: inset 0 0 0 2px var(--primary-light); opacity: 0; transition: opacity 0.4s; z-index: 0; pointer-events: none; }
-        .stat-card:hover { transform: translateY(-10px); box-shadow: 0 25px 50px -15px rgba(5, 150, 105, 0.25); background: #ffffff; }
+        .stat-card:hover { box-shadow: 0 25px 50px -15px rgba(5, 150, 105, 0.3); background: #ffffff; }
         .stat-card:hover::after { opacity: 1; }
         .stat-icon { position: relative; z-index: 1; width: 75px; height: 75px; margin: 0 auto 20px auto; border-radius: 22px; background: linear-gradient(135deg, var(--primary-light) 0%, #ffffff 100%); display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px -5px rgba(5, 150, 105, 0.2); transition: transform 0.4s; border: 1px solid rgba(255,255,255,0.8); }
         .stat-card:hover .stat-icon { transform: scale(1.15) rotate(-5deg); }
@@ -223,7 +232,7 @@
         .stat-label { position: relative; z-index: 1; font-weight: 700; color: var(--primary-dark); margin-bottom: 10px; font-size: 1.1rem; }
         .stat-desc { position: relative; z-index: 1; font-size: 0.85rem; color: var(--text-mute); margin: 0; line-height: 1.6; }
 
-        /* --- 5. TIMELINE --- */
+        /* TIMELINE */
         .timeline-container { position: relative; max-width: 800px; margin: 0 auto; padding-left: 35px; border-left: 3px dashed var(--primary-light); }
         .timeline-item { position: relative; margin-bottom: 40px; }
         .timeline-item:last-child { margin-bottom: 0; }
@@ -233,7 +242,7 @@
         .timeline-date { font-weight: 700; font-size: 0.9rem; margin-bottom: 8px; }
         .timeline-title { font-weight: 800; font-size: 1.25rem; margin-bottom: 12px; color: var(--secondary); }
 
-        /* --- 6. KONSOL PETA MODERN --- */
+        /* KONSOL PETA MODERN */
         .map-console-wrapper {
             background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px);
             border-radius: 36px; padding: 24px;
@@ -246,7 +255,6 @@
         .map-console-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
         @media (min-width: 992px) { .map-console-grid { grid-template-columns: 1fr 360px; align-items: start; } }
 
-        /* Peta UI */
         .map-shell { position: relative; border-radius: 28px; overflow: hidden; border: 2px solid white; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
         #map { width: 100%; height: min(65vh, 600px); min-height: 420px; background: #E2E8F0; z-index: 1; }
         @media (max-width: 767px) { #map { height: 55vh; min-height: 380px; } }
@@ -273,7 +281,6 @@
         .leaflet-bar a:hover { background: var(--primary) !important; color: white !important; }
         .leaflet-control-attribution { background: rgba(255,255,255,0.85) !important; backdrop-filter: blur(6px); border-radius: 10px 0 0 0 !important; font-size: 0.68rem !important; }
 
-        /* Panel Kontrol */
         .control-panel { background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); border: 1px solid var(--border-color); border-radius: 28px; padding: 20px; box-shadow: 0 20px 40px -15px rgba(0,0,0,0.05); display: flex; flex-direction: column; gap: 16px; }
         .panel-tabs { display: flex; gap: 4px; background: rgba(248, 250, 252, 0.5); padding: 6px; border-radius: 50px; border: 1px solid var(--border-color); }
         .panel-tab-btn { flex: 1; border: none; background: transparent; padding: 10px 10px; border-radius: 50px; font-size: 0.8rem; font-weight: 700; color: var(--text-mute); cursor: pointer; transition: all .3s; }
@@ -308,7 +315,7 @@
         .attr-label { font-size: 0.75rem; color: var(--text-mute); font-weight: 700; display: block; margin-bottom: 4px; text-transform: uppercase; }
         .attr-val { font-size: 1.05rem; font-weight: 800; color: var(--secondary); }
 
-        /* --- FOOTER --- */
+        /* FOOTER */
         footer { background: var(--secondary); color: white; padding: 60px 0 25px 0; position: relative; z-index: 2; }
         .footer-brand { font-size: 1.5rem; font-weight: 800; color: white; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; margin-bottom: 16px; }
         .footer-text { color: #94A3B8; font-size: 0.95rem; line-height: 1.7; }
@@ -368,13 +375,13 @@
         </div>
     </header>
 
-    <!-- SECTION SEKILAS (Teks Persis Seperti Permintaan) -->
+    <!-- SECTION SEKILAS (Teks Persis Seperti Permintaan - JUDUL DIPERBAIKI SEJAJAR & RAPI) -->
     <section id="sekilas" class="section-padding" style="background-color: transparent;">
         <div class="container">
             <div class="row align-items-center g-5">
                 <div class="col-lg-6" data-aos="fade-right">
                     <span class="section-badge"><i class="fa-solid fa-circle-info me-1"></i> Sekilas & Profil</span>
-                    <h2 class="section-title">Dari "Demakjar" Menjadi <span>Dimajar 2</span></h2>
+                    <h2 class="section-title">Dari "Demakjar" Menjadi<br><span>Dimajar 2</span></h2>
                     <p class="mb-4" style="line-height: 1.8; font-size: 1.05rem;">Menurut cerita tutur masyarakat dan sesepuh desa, nama Dimajar berakar dari kata <b>"Demakjar"</b>. Alkisah, pada masa lampau seorang Sunan dari Demak pernah singgah di wilayah ini untuk menyebarkan syiar Islam dan mendirikan sebuah masjid. Karena kebiasaan pelafalan masyarakat Jawa yang menyederhanakan sebutan agar lebih mudah diucapkan, kata <i>"Demakjar"</i> lambat laun bertransformasi menjadi <b>Dimajar</b>.</p>
                     <p style="line-height: 1.8; font-size: 1.05rem;">Seiring berjalannya waktu dan wilayahnya yang semakin luas, kawasan ini dimekarkan menjadi tiga wilayah administrasi: Dimajar I, Dimajar II, dan Dimajar III. Dusun Dimajar II sendiri tumbuh menjadi pedusunan yang asri di Kelurahan Sumberarum, Kecamatan Tempuran, Kabupaten Magelang, dengan mayoritas warganya menggantungkan hidup dari sektor pertanian yang subur dan harmonis.</p>
                 </div>
@@ -402,7 +409,7 @@
 
             <div class="row g-4 mb-5">
                 <div class="col-lg-6" data-aos="fade-up" data-aos-delay="0">
-                    <div class="history-card">
+                    <div class="history-card spotlight-card">
                         <div class="d-flex align-items-center gap-3 mb-3">
                             <div class="stat-icon m-0" style="width: 55px; height: 55px; font-size: 1.4rem;"><i class="fa-solid fa-mosque"></i></div>
                             <h4 class="mb-0 fw-bold">Masjid Al-Barokah</h4>
@@ -412,7 +419,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6" data-aos="fade-up" data-aos-delay="150">
-                    <div class="history-card">
+                    <div class="history-card spotlight-card">
                         <div class="d-flex align-items-center gap-3 mb-3">
                             <div class="stat-icon m-0" style="width: 55px; height: 55px; font-size: 1.4rem;"><i class="fa-solid fa-gem"></i></div>
                             <h4 class="mb-0 fw-bold">Situs Batu Yoni (Umpak)</h4>
@@ -458,7 +465,7 @@
 
             <div class="row g-4 justify-content-center" data-aos="fade-up" data-aos-delay="200">
                 <div class="col-6 col-lg-3">
-                    <div class="stat-card">
+                    <div class="stat-card spotlight-card">
                         <div class="stat-icon mb-3"><i class="fa-solid fa-house-chimney fa-2x" style="color: #059669;"></i></div>
                         <h3 class="stat-number">106</h3>
                         <h5 class="stat-label">Jumlah Bangunan</h5>
@@ -466,7 +473,7 @@
                     </div>
                 </div>
                 <div class="col-6 col-lg-3">
-                    <div class="stat-card">
+                    <div class="stat-card spotlight-card">
                         <div class="stat-icon mb-3"><i class="fa-solid fa-people-roof fa-2x" style="color: #059669;"></i></div>
                         <h3 class="stat-number">87</h3>
                         <h5 class="stat-label">Kepala Keluarga (KK)</h5>
@@ -474,7 +481,7 @@
                     </div>
                 </div>
                 <div class="col-6 col-lg-3">
-                    <div class="stat-card">
+                    <div class="stat-card spotlight-card">
                         <div class="stat-icon mb-3"><i class="fa-solid fa-users fa-2x" style="color: #059669;"></i></div>
                         <h3 class="stat-number">283</h3>
                         <h5 class="stat-label">Total Warga</h5>
@@ -482,7 +489,7 @@
                     </div>
                 </div>
                 <div class="col-6 col-lg-3">
-                    <div class="stat-card">
+                    <div class="stat-card spotlight-card">
                         <div class="stat-icon mb-3"><i class="fa-solid fa-sitemap fa-2x" style="color: #059669;"></i></div>
                         <h3 class="stat-number">2</h3>
                         <h5 class="stat-label">Rukun Tetangga (RT)</h5>
@@ -505,7 +512,7 @@
             <div class="timeline-container">
                 <div class="timeline-item" data-aos="fade-up">
                     <div class="timeline-dot"></div>
-                    <div class="timeline-content">
+                    <div class="timeline-content spotlight-card">
                         <div class="timeline-date" style="color: var(--primary);">Aspek Infrastruktur & Tata Ruang</div>
                         <h4 class="timeline-title">Pemetaan Fasilitas & Permukiman</h4>
                         <p class="text-muted mb-0">Dusun Dimajar 2 terus berbenah dalam memetakan jaringan infrastruktur, kelistrikan, sumber air bersih, serta sebaran hunian warga sebagai bagian dari upaya peningkatan kesejahteraan hidup dan penataan lingkungan yang asri.</p>
@@ -513,7 +520,7 @@
                 </div>
                 <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
                     <div class="timeline-dot"></div>
-                    <div class="timeline-content">
+                    <div class="timeline-content spotlight-card">
                         <div class="timeline-date" style="color: var(--primary);">Aspek Geografi & Topografi</div>
                         <h4 class="timeline-title">Karakteristik Elevasi & Lahan Pertanian</h4>
                         <p class="text-muted mb-0">Dengan topografi elevasi dan kemiringan lereng yang khas, wilayah ini mengatur struktur permukiman dan lahan pertaniannya secara rapi, menjaga keseimbangan antara aktivitas ekonomi warga dan kelestarian alam.</p>
@@ -521,7 +528,7 @@
                 </div>
                 <div class="timeline-item" data-aos="fade-up" data-aos-delay="200">
                     <div class="timeline-dot"></div>
-                    <div class="timeline-content">
+                    <div class="timeline-content spotlight-card">
                         <div class="timeline-date" style="color: var(--primary);">Aspek Sosial & Cagar Budaya</div>
                         <h4 class="timeline-title">Pelestarian Warisan Sejarah</h4>
                         <p class="text-muted mb-0">Selain potensi alam, Dimajar 2 juga menjaga erat nilai historis dan kerukunan warga melalui keberadaan Situs Arkeologi Batu Yoni serta Masjid Al-Barokah dengan keunikan arsitektur tiang penyangga tunggalnya (saka guru).</p>
@@ -540,7 +547,7 @@
                 <p class="text-muted mx-auto" style="max-width: 600px; font-size: 1.05rem;">Aktifkan layer peta tematik terbaru di bawah ini, lalu klik objek di peta untuk melihat detail atributnya.</p>
             </div>
 
-            <div class="map-console-wrapper" data-aos="zoom-in" data-aos-duration="800">
+            <div class="map-console-wrapper spotlight-card" data-aos="zoom-in" data-aos-duration="800">
                 <div class="map-console-toolbar">
                     <h5 class="font-heading mb-0"><i class="fa-solid fa-map-location-dot text-success me-2"></i>Peta Tematik Dusun</h5>
                     <button class="btn-panel-toggle d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#controlPanelCollapse">
@@ -643,7 +650,9 @@
     <script>
         AOS.init({ once: true, offset: 50, duration: 800 });
 
-        // Navbar Melayang & Animasi Scroll Parallax
+        // ---------------------------------------------------------------
+        // 1. NAVBAR & PARALLAX BACKGROUND
+        // ---------------------------------------------------------------
         window.addEventListener('scroll', function () {
             const navbar = document.getElementById('mainNav');
             const scrolled = window.scrollY;
@@ -651,20 +660,74 @@
             if (scrolled > 50) navbar.classList.add('scrolled');
             else navbar.classList.remove('scrolled');
 
-            // Handle Parallax Partikel & Radar di Latar Belakang
             const parallaxContainer = document.getElementById('parallaxParticles');
             const radarBg = document.getElementById('radarBg');
-            if (parallaxContainer) {
-                // Efek parallax scroll perlahan ke bawah
-                parallaxContainer.style.transform = `translateY(${scrolled * 0.2}px)`;
-            }
-            if (radarBg) {
-                radarBg.style.marginTop = `${scrolled * 0.15}px`;
-            }
+            if (parallaxContainer) parallaxContainer.style.transform = `translateY(${scrolled * 0.2}px)`;
+            if (radarBg) radarBg.style.marginTop = `${scrolled * 0.15}px`;
         });
 
         // ---------------------------------------------------------------
-        // INISIALISASI PETA
+        // 2. ANIMASI BARU: COUNT UP NUMBER (ANGKA BERJALAN)
+        // ---------------------------------------------------------------
+        const countObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const target = parseInt(el.innerText, 10);
+                    if (isNaN(target)) return;
+
+                    let count = 0;
+                    const duration = 1800;
+                    const increment = target / (duration / 16);
+
+                    const updateCount = () => {
+                        count += increment;
+                        if (count < target) {
+                            el.innerText = Math.ceil(count);
+                            requestAnimationFrame(updateCount);
+                        } else {
+                            el.innerText = target;
+                        }
+                    };
+                    el.innerText = '0';
+                    updateCount();
+                    observer.unobserve(el);
+                }
+            });
+        }, { threshold: 0.6 });
+
+        document.querySelectorAll('.stat-number').forEach(c => countObserver.observe(c));
+
+        // ---------------------------------------------------------------
+        // 3. ANIMASI BARU: 3D TILT EFFECT & SPOTLIGHT GLOW
+        // ---------------------------------------------------------------
+        document.querySelectorAll('.spotlight-card').forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+
+                if (card.classList.contains('history-card') || card.classList.contains('stat-card')) {
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = ((y - centerY) / centerY) * -8;
+                    const rotateY = ((x - centerX) / centerX) * 8;
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px) scale(1.02)`;
+                }
+            });
+
+            card.addEventListener('mouseleave', () => {
+                if (card.classList.contains('history-card') || card.classList.contains('stat-card')) {
+                    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px) scale(1)';
+                }
+            });
+        });
+
+        // ---------------------------------------------------------------
+        // 4. INISIALISASI PETA LEAFLET
         // ---------------------------------------------------------------
         var map = L.map('map', { center: [-7.7956, 110.3695], zoom: 16, zoomControl: false });
         L.control.zoom({ position: 'bottomright' }).addTo(map);
